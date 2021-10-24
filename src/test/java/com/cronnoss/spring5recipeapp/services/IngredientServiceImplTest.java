@@ -1,11 +1,14 @@
 package com.cronnoss.spring5recipeapp.services;
 
 import com.cronnoss.spring5recipeapp.commands.IngredientCommand;
+import com.cronnoss.spring5recipeapp.converters.IngredientCommandToIngredient;
 import com.cronnoss.spring5recipeapp.converters.IngredientToIngredientCommand;
+import com.cronnoss.spring5recipeapp.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import com.cronnoss.spring5recipeapp.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.cronnoss.spring5recipeapp.domain.Ingredient;
 import com.cronnoss.spring5recipeapp.domain.Recipe;
 import com.cronnoss.spring5recipeapp.repositories.RecipeRepository;
+import com.cronnoss.spring5recipeapp.repositories.UnitOfMeasureRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -19,22 +22,27 @@ import static org.mockito.Mockito.*;
 public class IngredientServiceImplTest {
 
     private final IngredientToIngredientCommand ingredientToIngredientCommand;
+    private final IngredientCommandToIngredient ingredientCommandToIngredient;
 
     @Mock
     RecipeRepository recipeRepository;
+
+    @Mock
+    UnitOfMeasureRepository unitOfMeasureRepository;
 
     IngredientService ingredientService;
 
     //init converters
     public IngredientServiceImplTest() {
         this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
+        this.ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
     }
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, recipeRepository);
+        ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, ingredientCommandToIngredient, recipeRepository, unitOfMeasureRepository);
     }
 
     @Test

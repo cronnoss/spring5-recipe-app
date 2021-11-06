@@ -71,6 +71,14 @@ class RecipeServiceImplTest {
     }
 
     @Test
+    public void getRecipeById_throws_NumberFormatException_when_id_is_not_a_number() throws NumberFormatException {
+
+        assertThrows(NumberFormatException.class, () -> {
+            recipeService.findById(Long.valueOf("sadf"));
+        });
+    }
+
+    @Test
     public void getRecipeCommandByIdTest() {
         Recipe recipe = new Recipe();
         recipe.setId(1L);

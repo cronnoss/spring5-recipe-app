@@ -2,6 +2,7 @@ package com.cronnoss.spring5recipeapp.controllers;
 
 import com.cronnoss.spring5recipeapp.commands.RecipeCommand;
 import com.cronnoss.spring5recipeapp.domain.Recipe;
+import com.cronnoss.spring5recipeapp.exceptions.NotFoundException;
 import com.cronnoss.spring5recipeapp.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,6 +48,15 @@ public class RecipeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
                 .andExpect(model().attributeExists("recipe"));
+    }
+
+    @Test
+    public void testGetRecipeNotFound() throws Exception {
+
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound());
     }
 
     @Test

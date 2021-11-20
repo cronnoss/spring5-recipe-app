@@ -25,12 +25,7 @@ jobs:
       # Then run your tests!
       - run:
           name: Test
-          command: mvn test
-      - run:
-          name: Cobertura
-          jdk:
-            - openjdk8
-          command: mvn cobertura:cobertura
+          command: mvn test cobertura:cobertura
           after_success:
             - bash <(curl -s https://codecov.io/bash)
 
@@ -40,4 +35,4 @@ workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
     jobs:
-      - build-and-test-and-cobertura
+      - build-and-test

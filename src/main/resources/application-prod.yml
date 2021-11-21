@@ -3,6 +3,7 @@ spring:
     url: jdbc:mysql://localhost:3306/cro_prod
     username: cro_prod_user
     password: cro
+    platform: mysql
   jpa:
     hibernate:
       ddl-auto: validate
